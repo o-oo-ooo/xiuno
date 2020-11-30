@@ -23,5 +23,7 @@ mix.styles('resources/css/bootstrap.css', 'public/css/bootstrap.css')
         'resources/js/bbs.js',
         'resources/js/bbs-cn.js'
     ], 'public/js/bbs.js')
+    .scripts('resources/js/md5.js', 'public/js/md5.js')
+    .scripts('resources/js/es6-shim.js', 'public/js/es6-shim.js')
     .scripts('resources/js/form.js', 'public/js/form.js');
     

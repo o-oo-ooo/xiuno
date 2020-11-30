@@ -15,7 +15,7 @@
         <![endif]-->
 
         @if(strpos(request()->userAgent(), 'ie'))
-            <script src="<?php echo $conf['view_url']; ?>js/es6-shim.js<?php echo $static_version; ?>"></script>
+            <script src="{{ mix('/js/es6-shim.js') }}"></script>
         @endif
         <script src="{{ mix('/js/jquery-3.1.0.js') }}"></script>
         <script src="{{ mix('/js/popper.js') }}"></script>
@@ -25,13 +25,20 @@
         <script src="{{ mix('/js/async.js') }}"></script>
         <script src="{{ mix('/js/form.js') }}"></script>
         <script>
-var debug = DEBUG = {{ config('app.debug') }};
-var url_rewrite_on = true;
-var forumarr = [];
-var fid = <?php echo $fid; ?>;
-var uid = 0;
-var gid = <?php echo intval($gid); ?>;
-xn.options.water_image_url = '{{ config("water_url") }}';	// 水印图片 / watermark image
+            var debug = DEBUG = {{ config('app.debug') }};
+            var url_rewrite_on = true;
+            var forumarr = $forumarr;
+            var fid = {{ $forum_id ?? 0 }};
+            
+            @auth
+                var uid = {{ Auth::user()->id }};
+                var gid = {{ Auth::user()->group_id }};
+            @else
+                var uid = 0;
+                var gid = 0;
+            @endauth
+            
+            xn.options.water_image_url = '{{ config("water_url") }}';	// 水印图片 / watermark image
         </script>
         <script src="{{ mix('/js/bbs.js') }}"></script>
         @yield('tail.script')

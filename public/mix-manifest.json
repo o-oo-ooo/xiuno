@@ -8,5 +8,7 @@
     "/js/bootstrap-plugin.js": "/js/bootstrap-plugin.js",
     "/js/async.js": "/js/async.js",
     "/js/bbs.js": "/js/bbs.js",
+    "/js/md5.js": "/js/md5.js",
+    "/js/es6-shim.js": "/js/es6-shim.js",
     "/js/form.js": "/js/form.js"
 }

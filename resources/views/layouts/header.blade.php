@@ -5,47 +5,39 @@
         </button>
 
         <a class="navbar-brand text-truncate" href="{{ config('app.url') }}">
-            <img src="/logo.png" class="logo-2">
+            <img src="{{ asset('logo.png') }}" class="logo-2">
             <span class="hidden-lg">{{ config('app.name') }}</span>
         </a>
 
-        <?php if (empty($uid)) { ?>
-            <a class="navbar-brand hidden-lg" href="<?php echo url('user-login'); ?>" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
-        <?php } else { ?>
+        @guest
+            <a class="navbar-brand hidden-lg" href="{{ route('login') }}" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
+        @else
             <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create-$fid"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
-        <?php } ?>
+        @endguest
 
         <div class="collapse navbar-collapse" id="nav">
             <!-- 左侧：版块 -->
             <ul class="navbar-nav mr-auto">
-                <!--{hook header_nav_forum_start.htm}-->
                 <li class="nav-item home" fid="0" data-active="fid-0"><a class="nav-link" href="."><i class="icon-home d-md-none"></i> @lang('app.index_page')</a></li>
-                <!--{hook header_nav_home_link_after.htm}-->
                 <?php foreach ($forumlist_show as $_forum) { ?>
-                    <!--{hook header_nav_forumlist_loop_start.htm}-->
                     <li class="nav-item" fid="<?php echo $_forum['fid']; ?>" data-active="fid-<?php echo $_forum['fid']; ?>">
                         <a class="nav-link" href="<?php echo url("forum-$_forum[fid]"); ?>"><i class="icon-circle-o d-md-none"></i> <?php echo $_forum['name']; ?></a>
                     </li>
-                    <!--{hook header_nav_forumlist_loop_end.htm}-->
                 <?php } ?>
-                <!--{hook header_nav_forum_end.htm}-->
             </ul>
             <!-- 右侧：用户 -->
             <ul class="navbar-nav">
-                <!--{hook header_nav_user_start.htm}-->
-                <?php if (empty($uid)) { ?>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo url('user-login'); ?>"><i class="icon-user"></i> @lang('app.login')</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="<?php echo url('user-create'); ?>">@lang('app.register')</a></li>-->
-                <?php } else { ?>
+                @guest
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="icon-user"></i> @lang('app.login')</a></li>
+                    <!--<li class="nav-item"><a class="nav-link" href="{{ route('user.create') }}">@lang('app.register')</a></li>-->
+                @else
                     <li class="nav-item username"><a class="nav-link" href="<?php echo url('my'); ?>"><img class="avatar-1" src="<?php echo $user['avatar_url']; ?>"> <?php echo $user['username']; ?></a></li>
                     <!-- 管理员 -->
-                    <?php if ($gid == 1) { ?>
+                    @if(Auth::id() == 1)
                         <li class="nav-item"><a class="nav-link" href="admin/"><i class="icon-home"></i> @lang('app.admin_page')</a></li>
-                    <?php } ?>
-                    <!--{hook header_nav_admin_page_after.htm}-->
+                    @endif
                     <li class="nav-item"><a class="nav-link" href="<?php echo url('user-logout'); ?>"><i class="icon-sign-out"></i> @lang('app.logout')</a></li>
-                    <?php } ?>
-                <!--{hook header_nav_user_end.htm}-->
+                @endguest
             </ul>
         </div>
     </div>

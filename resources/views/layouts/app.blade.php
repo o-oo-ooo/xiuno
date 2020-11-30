@@ -35,6 +35,6 @@
         </main>
 
         @include('layouts.footer')
-        @yield('tail')
+        @yield('tail.script')
     </body>
 </html>
