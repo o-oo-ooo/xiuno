@@ -21,13 +21,13 @@ class CreateForumsTable extends Migration
             $table->unsignedMediumInteger('today_posts')->default(0);
             $table->unsignedMediumInteger('today_threads')->default(0);
             $table->text('brief');
-            $table->text('announcement');
+            $table->text('announcement')->default('');
             $table->unsignedInteger('accesson')->default(0);
             $table->unsignedTinyInteger('orderby')->default(0);
             $table->unsignedInteger('icon_create_at')->default(0);
-            $table->char('moduids', 120);
-            $table->char('seo_title', 64);
-            $table->char('seo_keywords', 64);
+            $table->char('moduids', 120)->default('');
+            $table->char('seo_title', 64)->default('');
+            $table->char('seo_keywords', 64)->default('');
             $table->timestamps();
         });
     }
