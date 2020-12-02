@@ -8,22 +8,22 @@
             <img src="{{ asset('logo.png') }}" class="logo-2">
             <span class="hidden-lg">{{ config('app.name') }}</span>
         </a>
-
+        
         @guest
-            <a class="navbar-brand hidden-lg" href="{{ route('login') }}" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
+        <a class="navbar-brand hidden-lg" href="{{ route('login') }}" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
         @else
-            <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create-$fid"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
+        <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create-$fid"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
         @endguest
 
         <div class="collapse navbar-collapse" id="nav">
             <!-- 左侧：版块 -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item home" fid="0" data-active="fid-0"><a class="nav-link" href="."><i class="icon-home d-md-none"></i> @lang('app.index_page')</a></li>
-                <?php foreach ($forumlist_show as $_forum) { ?>
-                    <li class="nav-item" fid="<?php echo $_forum['fid']; ?>" data-active="fid-<?php echo $_forum['fid']; ?>">
-                        <a class="nav-link" href="<?php echo url("forum-$_forum[fid]"); ?>"><i class="icon-circle-o d-md-none"></i> <?php echo $_forum['name']; ?></a>
-                    </li>
-                <?php } ?>
+                @foreach($forumlist as $forum)
+                <li class="nav-item" fid="{{ $forum->id }}" data-active="fid-{{ $forum->id }}">
+                    <a class="nav-link" href="<?php echo url("forum-$forum[fid]"); ?>"><i class="icon-circle-o d-md-none"></i> {{ $forum->name }}</a>
+                </li>
+                @endforeach
             </ul>
             <!-- 右侧：用户 -->
             <ul class="navbar-nav">

@@ -27,18 +27,17 @@
         <script>
             var debug = DEBUG = {{ config('app.debug') }};
             var url_rewrite_on = true;
-            var forumarr = $forumarr;
+            var forumarr = {!! $forumarr !!};
             var fid = {{ $forum_id ?? 0 }};
             
             @auth
-                var uid = {{ Auth::user()->id }};
-                var gid = {{ Auth::user()->group_id }};
+            var uid = {{ Auth::user()->id }};
+            var gid = {{ Auth::user()->group_id }};
             @else
-                var uid = 0;
-                var gid = 0;
+            var uid = 0;
+            var gid = 0;
             @endauth
             
             xn.options.water_image_url = '{{ config("water_url") }}';	// 水印图片 / watermark image
         </script>
         <script src="{{ mix('/js/bbs.js') }}"></script>
-        @yield('tail.script')
