@@ -16,7 +16,7 @@ class ForumSeeder extends Seeder
     {
         DB::table('forums')->insert([
             'name' => '默认板块',
-            'brief' => '默认板块介绍'
+            'brief' => '默认板块介绍',
         ]);
     }
 }
