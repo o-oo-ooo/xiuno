@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [IndexController::class, 'index']);
 
-Route::get('/login', function () {
-    return view('user.login')->with('threadlist', 0)
-                ->with('fid', 0)
-                ->with('forumlist_show', []);
-})->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::resource('user', UserController::class);

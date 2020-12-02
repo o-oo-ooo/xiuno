@@ -11,14 +11,14 @@ class LoginController extends Controller
      */
     public function index()
     {
-        return view();
+        return view('user.login');
     }
     
     /**
-     * 用户验证
+     * 用户登录验证
      */
-    public function varifiy()
+    public function login()
     {
-        
+        return '';
     }
 }
