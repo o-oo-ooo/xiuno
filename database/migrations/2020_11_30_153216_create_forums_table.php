@@ -24,7 +24,7 @@ class CreateForumsTable extends Migration
             $table->text('announcement')->default('');
             $table->unsignedInteger('accesson')->default(0);
             $table->unsignedTinyInteger('orderby')->default(0);
-            $table->unsignedInteger('icon_create_at')->default(0);
+            $table->unsignedInteger('icon')->default(0);
             $table->char('moduids', 120)->default('');
             $table->char('seo_title', 64)->default('');
             $table->char('seo_keywords', 64)->default('');
