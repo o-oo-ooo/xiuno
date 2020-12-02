@@ -27,7 +27,7 @@
         <script>
             var debug = DEBUG = {{ config('app.debug') }};
             var url_rewrite_on = true;
-            var forumarr = {!! $forumarr !!};
+            var forumarr = {!! $forumlist->pluck('name', 'id')->toJson() !!};
             var fid = {{ $forum_id ?? 0 }};
             
             @auth

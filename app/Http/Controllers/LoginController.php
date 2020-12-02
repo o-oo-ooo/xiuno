@@ -17,8 +17,11 @@ class LoginController extends Controller
     /**
      * 用户登录验证
      */
-    public function login()
+    public function login(Request $request)
     {
-        return '';
+        $data = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
     }
 }

@@ -18,7 +18,6 @@
                         <input type="text" class="form-control" placeholder="@lang('app.email') / @lang('app.username')" id="email" name="email">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <!--{hook user_login_email_after.htm}-->
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon icon-lock icon-fw"></i></span>
@@ -26,7 +25,6 @@
                         <input type="password" class="form-control" placeholder="@lang('app.password')" id="password" name="password">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <!--{hook user_login_password_after.htm}-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="@lang('app.submiting')...">@lang('app.login')</button>
                     </div>
@@ -37,8 +35,8 @@
                         <div class="media-body text-right">
                             <a href="{{ route('user.create') }}" class="text-muted"><small>@lang('app.user_create')</small></a>
                             <?php if (!empty($conf['user_resetpw_on'])) { ?>
-                                <a href="<?php echo url('user-resetpw'); ?>" class="text-muted ml-3"><small>@lang('app.forgot_pw')</small></a>
-                                    <?php } ?>
+                            <a href="<?php echo url('user-resetpw'); ?>" class="text-muted ml-3"><small>@lang('app.forgot_pw')</small></a>
+                            <?php } ?>
                         </div>
                     </div>
                 </form>
