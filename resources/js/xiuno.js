@@ -816,7 +816,6 @@ $.xpost = function(url, postdata, callback, progress_callback) {
 		type: 'POST',
 		url: url,
 		data: postdata,
-		dataType: 'text',
 		timeout: 6000000,
 		progress: function(e) {
 			if (e.lengthComputable) {
