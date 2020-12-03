@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use App\Models\Forum;
 
 class ShareForumList
