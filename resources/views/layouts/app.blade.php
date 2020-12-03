@@ -13,6 +13,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
         <meta http-equiv="Cache-Control" content="no-transform"/>
         <meta http-equiv="Cache-Control" content="no-siteapp"/>
+        
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>@yield('title')</title>
 

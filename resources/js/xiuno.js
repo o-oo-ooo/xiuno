@@ -1949,7 +1949,11 @@ $.fn.xn_toggle = function() {
 	});
 };
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $('.xn-dropdown').xn_dropdown();
 $('.xn-toggle').xn_toggle();
-
-console.log('xiuno.js loaded');
