@@ -836,13 +836,8 @@ $.xpost = function(url, postdata, callback, progress_callback) {
 				return callback(s.code, s.message);
 			}
 		},
-		error: function(xhr, type) {
-			if(type != 'abort' && type != 'error' || xhr.status == 403) {
-				return callback(-1000, "xhr.responseText:"+xhr.responseText+', type:'+type);
-			} else {
-				return callback(-1001, "xhr.responseText:"+xhr.responseText+', type:'+type);
-				console.log("xhr.responseText:"+xhr.responseText+', type:'+type);
-			}
+		error: function(xhr) {
+			return callback(-1000, xhr.responseJSON['errors']);
 		}
 	});
 };
