@@ -10,7 +10,7 @@
                 @lang('app.user_login')
             </div>
             <div class="card-body ajax_modal_body">
-                <form action="{{ route('login') }}" method="POST" id="form">
+                <form action="{{ route('login') }}?XDEBUG_SESSION_START=debug" method="POST" id="form">
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon icon-user icon-fw"></i></span>
@@ -22,7 +22,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon icon-lock icon-fw"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="@lang('app.password')" id="password" name="password">
+                        <input type="password" class="form-control" placeholder="@lang('app.password')" id="password" name="password" autocomplete>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
@@ -60,14 +60,13 @@ jform.on('submit', function () {
     jsubmit.button('loading');
     var postdata = jform.serializeObject();
     postdata.password = $.md5(postdata.password);
-    $.xpost(jform.attr('action'), postdata, function (code, message) {
+    $.xpost(jform.attr('action'), postdata, function (code, messages) {
         if (code == 0) {
-            jsubmit.button(message).delay(1000).location(referer);
-        } else if (xn.is_number(code)) {
-            alert(message);
-            jsubmit.button('reset');
+            jsubmit.button(messages).delay(1000).location(referer);
         } else {
-            jform.find('[name="' + code + '"]').alert(message).focus();
+            $.each(messages, function (key, value) {
+                jform.find('[name="' + key + '"]').alert(value[0]);
+            });
             jsubmit.button('reset');
         }
         /*
