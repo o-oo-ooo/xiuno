@@ -823,9 +823,8 @@ $.xpost = function(url, postdata, callback, progress_callback) {
 				//console.log('progress1:'+e.loaded / e.total * 100 + '%');
 			}
 		},
-		success: function(r){
-			if(!r) return callback(-1, 'Server Response Empty!');
-			var s = xn.json_decode(r);
+		success: function(s){
+			if(!s) return callback(-1, 'Server Response Empty!');
 			if(!s || s.code === undefined) return callback(-1, 'Server Response Not JSON：'+r);
 			if(s.code == 0) {
 				return callback(0, s.message);
