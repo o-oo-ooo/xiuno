@@ -12,7 +12,7 @@
         @guest
         <a class="navbar-brand hidden-lg" href="{{ route('login') }}" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
         @else
-        <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create-$fid"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
+        <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
         @endguest
 
         <div class="collapse navbar-collapse" id="nav">
@@ -31,12 +31,21 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="icon-user"></i> @lang('app.login')</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href="{{ route('user.create') }}">@lang('app.register')</a></li>-->
                 @else
-                    <li class="nav-item username"><a class="nav-link" href="<?php echo url('my'); ?>"><img class="avatar-1" src="<?php echo $user['avatar_url']; ?>"> <?php echo $user['username']; ?></a></li>
+                <li class="nav-item username"><a class="nav-link" href="<?php echo url('my'); ?>"><img class="avatar-1" src="{{ Auth::user()->avatar_url }}"> {{ Auth::user()->name }}</a></li>
                     <!-- 管理员 -->
                     @if(Auth::id() == 1)
                         <li class="nav-item"><a class="nav-link" href="admin/"><i class="icon-home"></i> @lang('app.admin_page')</a></li>
                     @endif
-                    <li class="nav-item"><a class="nav-link" href="<?php echo url('user-logout'); ?>"><i class="icon-sign-out"></i> @lang('app.logout')</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}" 
+                           onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                            <i class="icon-sign-out"></i> @lang('app.logout')
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
                 @endguest
             </ul>
         </div>

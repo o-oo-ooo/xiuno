@@ -59,7 +59,7 @@ jform.on('submit', function () {
     jform.reset();
     jsubmit.button('loading');
     var postdata = jform.serializeObject();
-    postdata.password = $.md5(postdata.password);
+    postdata.password = postdata.password;
     $.xpost(jform.attr('action'), postdata, function (code, messages) {
         if (code == 0) {
             jsubmit.button(messages).delay(1000).location(referer);

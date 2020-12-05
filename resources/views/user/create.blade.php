@@ -10,7 +10,7 @@
                 @lang('app.user_create')
             </div>
             <div class="card-body">
-                <form action="<?php echo url('user-create'); ?>" method="post" id="form">
+                <form action="{{ route('user.store') }}" method="POST" id="form">
 
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -77,8 +77,6 @@
 @endsection
 
 @section('tail.script')
-<script src="{{ mix('js/md5.js') }}"></script>
-
 <script>
 var jform = $('#form');
 var jsubmit = $('#submit');
@@ -116,7 +114,6 @@ jsend.on('click', function () {
 jform.on('submit', function () {
     var postdata = jform.serializeObject();
     jsubmit.button('loading');
-    postdata.password = $.md5(postdata.password);
     $.xpost(jform.attr('action'), postdata, function (code, message) {
         if (code == 0) {
             jsubmit.button(message).delay(1000).location(referer);

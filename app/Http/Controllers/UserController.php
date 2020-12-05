@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -24,8 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create')
-                ->with('forumlist_show', []);
+        return view('user.create');
     }
 
     /**
@@ -36,7 +37,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email:rfc|unique:users',
+            'username' => 'required|alpha_num|max:16',
+            'password' => 'required|max:32'
+        ]);
+        
+        $user = User::create([
+            'name' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        
+        Auth::login($user);
+        
+        return response()->json([
+            'code' => 0,
+            'message' => trans('app.user_create_sucessfully')
+        ]);
     }
 
     /**
