@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'group_id',
     ];
 
     /**
@@ -40,4 +41,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * 获取用户组
+     *
+     * @return Collection
+     */
+    public function group()
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+    
+    /**
+     * avatar属性修改器
+     *
+     * @return string
+     */
+    public function getAvatarAttribute($value)
+    {
+        return $value ? asset("avatar/{($this->id % 9999)}/{$this->id}.png") : asset('image/avatar.png');
+    }
 }

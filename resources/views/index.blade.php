@@ -22,10 +22,10 @@
 
         @include('section.thread-list-mod')
 
-        <nav class="my-3"><ul class="pagination justify-content-center flex-wrap"><?php echo $pagination; ?></ul></nav>
+        <nav class="my-3"><ul class="pagination justify-content-center flex-wrap">{{ $threadlist->links('section.paginator') }}</ul></nav>
     </div>
     <div class="col-lg-3 d-none d-lg-block aside">
-        <a role="button" class="btn btn-primary btn-block mb-3" href="<?php echo url('thread-create-' . $fid); ?>">@lang('app.thread_create_new')</a>
+        <a role="button" class="btn btn-primary btn-block mb-3" href="{{ route('thread.create') }}">@lang('app.thread_create_new')</a>
         <div class="card card-site-info">
             <div class="m-3">
                 <h5 class="text-center">{{ config('app.name') }}</h5>
@@ -36,22 +36,22 @@
                     <tr align="center">
                         <td>
                             <span class="text-muted">@lang('app.threads')</span><br>
-                            <b><?php echo $runtime['threads']; ?></b>
+                            <b>{{ $siteStatistics['threads'] }}</b>
                         </td>
                         <td>
                             <span class="text-muted">@lang('app.posts')</span><br>
-                            <b><?php echo $runtime['posts']; ?></b>
+                            <b>{{ $siteStatistics['posts'] }}</b>
                         </td>
                         <td>
                             <span class="text-muted">@lang('app.users')</span><br>
-                            <b><?php echo $runtime['users']; ?></b>
+                            <b>{{ $siteStatistics['users'] }}</b>
                         </td>
-                        <?php if ($runtime['onlines'] > 0) { ?>
+                        @if($siteStatistics['onlines'])
                             <td>
                                 <span class="text-muted">@lang('app.online')</span><br>
-                                <b><?php echo $runtime['onlines']; ?></b>
+                                <b>{{ $siteStatistics['onlines'] }}</b>
                             </td>
-                        <?php } ?>
+                        @endif
                     </tr>
                 </table>
             </div>

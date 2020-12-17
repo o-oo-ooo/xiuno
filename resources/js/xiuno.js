@@ -524,9 +524,9 @@ xn.url = function(u, url_rewrite) {
 	}
 	var r = '';
 	if(!on) {
-		r = path + '?' + query + '.htm';
+		r = path + '?' + query;
 	} else if(on == 1) {
-		r = path + query + ".htm";
+		r = path + query;
 	} else if(on == 2) {
 		r = path + '?' + xn.str_replace('-', '/', query);
 	} else if(on == 3) {
@@ -814,6 +814,41 @@ $.xpost = function(url, postdata, callback, progress_callback) {
 	
 	$.ajax({
 		type: 'POST',
+		url: url,
+		data: postdata,
+		timeout: 6000000,
+		progress: function(e) {
+			if (e.lengthComputable) {
+				if(progress_callback) progress_callback(e.loaded / e.total * 100);
+				//console.log('progress1:'+e.loaded / e.total * 100 + '%');
+			}
+		},
+		success: function(s){
+			if(!s) return callback(-1, 'Server Response Empty!');
+			if(!s || s.code === undefined) return callback(-1, 'Server Response Not JSON：'+r);
+			if(s.code == 0) {
+				return callback(0, s.message);
+			//系统错误
+			} else if(s.code < 0) {
+				return callback(s.code, s.message);
+			} else {
+				return callback(s.code, s.message);
+			}
+		},
+		error: function(xhr) {
+			return callback(-1000, xhr.responseJSON['errors']);
+		}
+	});
+};
+
+$.xajax = function(method, url, postdata, callback, progress_callback) {
+	if($.isFunction(postdata)) {
+		callback = postdata;
+		postdata = null;
+	}
+	
+	$.ajax({
+		type: method,
 		url: url,
 		data: postdata,
 		timeout: 6000000,

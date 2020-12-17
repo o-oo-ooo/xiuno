@@ -27,6 +27,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+//        Event::listen(function (\Illuminate\Database\Events\QueryExecuted $event) {
+//            var_dump($event->sql, $event->bindings);
+//        });
     }
 }

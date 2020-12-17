@@ -12,7 +12,7 @@
         @guest
         <a class="navbar-brand hidden-lg" href="{{ route('login') }}" aria-label="@lang('app.login')"> <i class="icon-user icon"></i></a>
         @else
-        <a class="navbar-brand hidden-lg" href="<?php echo url("thread-create"); ?>" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
+        <a class="navbar-brand hidden-lg" href="{{ route('thread.create') }}" aria-label="@lang('app.thread_create')"><i class="icon-edit icon"></i></a>
         @endguest
 
         <div class="collapse navbar-collapse" id="nav">
@@ -21,7 +21,7 @@
                 <li class="nav-item home" fid="0" data-active="fid-0"><a class="nav-link" href="."><i class="icon-home d-md-none"></i> @lang('app.index_page')</a></li>
                 @foreach($forumlist as $forum)
                 <li class="nav-item" fid="{{ $forum->id }}" data-active="fid-{{ $forum->id }}">
-                    <a class="nav-link" href="<?php echo url("forum-$forum[fid]"); ?>"><i class="icon-circle-o d-md-none"></i> {{ $forum->name }}</a>
+                    <a class="nav-link" href="{{ route('forum.show', $forum->id) }}"><i class="icon-circle-o d-md-none"></i> {{ $forum->name }}</a>
                 </li>
                 @endforeach
             </ul>
@@ -31,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="icon-user"></i> @lang('app.login')</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href="{{ route('user.create') }}">@lang('app.register')</a></li>-->
                 @else
-                <li class="nav-item username"><a class="nav-link" href="<?php echo url('my'); ?>"><img class="avatar-1" src="{{ Auth::user()->avatar_url }}"> {{ Auth::user()->name }}</a></li>
+                <li class="nav-item username"><a class="nav-link" href="{{ route('my.show', Auth::user()->id) }}"><img class="avatar-1" src="{{ Auth::user()->avatar_url }}"> {{ Auth::user()->name }}</a></li>
                     <!-- 管理员 -->
                     @if(Auth::id() == 1)
                         <li class="nav-item"><a class="nav-link" href="admin/"><i class="icon-home"></i> @lang('app.admin_page')</a></li>

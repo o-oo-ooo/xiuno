@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AttachController;
+use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\ForumController;
+use App\Http\Controllers\MyController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +21,17 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [IndexController::class, 'index']);
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('user', UserController::class);
+Route::resources([
+    'user' => UserController::class,
+    'forum' => ForumController::class,
+    'attach' => AttachController::class,
+    'thread' => ThreadController::class,
+    'my' => MyController::class,
+    'post' => PostController::class,
+]);

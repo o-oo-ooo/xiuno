@@ -1,81 +1,72 @@
-					<?php 
-					if($threadlist) { 
-						$have_allowtop = 0;
-						foreach($threadlist as &$_thread) {
-							$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
-							if($_thread['allowtop']) $have_allowtop = 1;
-						}
-					}
-					?>
+<?php
+if ($threadlist) {
+    $have_allowtop = 0;
+    foreach ($threadlist as &$_thread) {
+        //$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
+        if ($_thread['allowtop'])
+            $have_allowtop = 1;
+    }
+}
+?>
 
-					<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
-					<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
-						<?php if($have_allowtop) { ?>
-							<?php if($_thread['allowtop']) { ?>
-							<input type="checkbox" name="modtid" class="mt-3 mr-2" value="<?php echo $_thread['tid']; ?>" <?php echo empty($mod_input_checked) ? '' : 'checked disabled';?> />
-							<?php } ?>
-						
-						<?php } ?>
-						
-						<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
-							<img class="avatar-3" src="<?php echo $_thread['user_avatar_url'];?>">
-						</a>
-						<!--{hook thread_list_inc_avatar_after.htm}-->
-					
-						<div class="media-body">
-							<div class="subject break-all">
-							
-								<!--{hook thread_list_inc_top_icon_before.htm}-->
-								<?php if($_thread['top'] > 0) { ?>
-									<i class="icon-top-<?php echo $_thread['top']; ?>"></i>
-								<?php } ?>
-								<!--{hook thread_list_inc_subject_top_after.htm}-->
-								
-								<!--{hook thread_list_inc_subject_before.htm}-->
-								<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
-								<!--{hook thread_list_inc_subject_after.htm}-->
-								
-								<!--{hook thread_list_inc_filetype_icon_before.htm}-->
-								<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
-								<!--{hook thread_list_inc_filetype_icon_after.htm}-->
-								
-								<!--{hook thread_list_inc_lock_icon_before.htm}-->
-								<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
-								<!--{hook thread_list_inc_lock_icon_after.htm}-->
-								
-							</div>
-							<div class="d-flex justify-content-between small mt-1">
-								<div>
-									<!--{hook thread_list_inc_username_before.htm}-->
-									<span class="username text-grey mr-1 <?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>" uid="<?php echo $_thread['uid'];?>"><?php echo $_thread['username'];?></span>
-									<span class="date text-grey<?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"><?php echo $_thread['create_date_fmt'];?></span>
-									<!--{hook thread_list_inc_username_after.htm}-->
-									
-									<!--{hook thread_list_inc_lastuid_before.htm}-->
-									<?php if($_thread['lastuid']) { ?>
-									<span>
-										<span class="text-grey mx-2">←</span>
-										<span class="username text-grey mr-1" uid="<?php echo $_thread['lastuid'];?>"><?php echo $_thread['lastusername'];?></span>
-										<span class="text-grey"><?php echo $_thread['last_date_fmt'];?></span>
-									</span>
-									<?php } ?>
-									<!--{hook thread_list_inc_lastuid_after.htm}-->
-									 
-								</div>
-								<div class="text-muted small">
-									<!--{hook thread_list_inc_view_before.htm}-->
-									<span class="ml-2 d-none"><i class="icon-eye"></i> <?php echo $_thread['views'];?></span>
-									<!--{hook thread_list_inc_view_after.htm}-->
-									
-									<!--{hook thread_list_inc_posts_before.htm}-->
-									<span class="ml-2"><i class="icon-comment-o"></i> <?php echo $_thread['posts'];?></span>
-									<!--{hook thread_list_inc_posts_after.htm}-->
-								</div>
-							</div>
-						</div>
-					</li>
-					<?php }} else { ?>
-					<li>
-						<div>@lang('app.none')</div>
-					</li>
-					<?php } ?>
+@if($threadlist)
+
+    @foreach($threadlist as $thread)
+    <li class="media thread tap <?php echo $_thread['top_class']; ?> " data-href="{{ route('thread.show', $thread->id) }}" data-tid="{{ $thread->id }}">
+            <?php if ($have_allowtop) { ?>
+                <?php if ($_thread['allowtop']) { ?>
+                    <input type="checkbox" name="modtid" class="mt-3 mr-2" value="{{ $thread->id }}" <?php echo empty($mod_input_checked) ? '' : 'checked disabled'; ?> />
+                <?php } ?>
+
+        <?php } ?>
+
+            <a href="{{ route('user.show', $thread->user_id) }}" tabindex="-1" class="ml-1 mt-1 mr-3">
+                <img class="avatar-3" src="{{ $thread->user->avatar }}">
+            </a>
+
+            <div class="media-body">
+                <div class="subject break-all">
+
+                    @if($thread->top)
+                        <i class="icon-top-{{ $thread->top }}"></i>
+                    @endif
+
+                    <a href="{{ route('thread.show', $thread->id) }}">{{ $thread->subject }}</a>
+
+                    @if($thread->files)
+                        <i class="icon small filetype other"></i>
+                    @endif
+
+                    @if($thread->closed)
+                        <i class="icon-lock"></i>
+                    @endif
+
+                </div>
+                <div class="d-flex justify-content-between small mt-1">
+                    <div>
+                        <span class="username text-grey mr-1 @if($thread->last_uid) hidden-sm @endif" uid="{{ $thread->user_id }}">{{ $thread->user->name }}</span>
+                        <span class="date text-grey @if($thread->last_uid) hidden-sm @endif">{{ $thread->created_at->diffForHumans() }}</span>
+
+                        @if($thread->last_uid)
+                            <span>
+                                <span class="text-grey mx-2">←</span>
+                                <span class="username text-grey mr-1" uid="{{ $thread->last_uid }}">{{ $thread->lastUser->name }}</span>
+                                <span class="text-grey">{{ $thread->updated_at }}</span>
+                            </span>
+                        @endif
+
+                    </div>
+                    <div class="text-muted small">
+                        <span class="ml-2 d-none"><i class="icon-eye"></i> {{ $thread->views }}</span>
+
+                        <span class="ml-2"><i class="icon-comment-o"></i> {{ $thread->posts }}</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    @endforeach
+@else
+    <li>
+        <div>@lang('app.none')</div>
+    </li>
+@endif

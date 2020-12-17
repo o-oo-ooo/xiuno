@@ -61,6 +61,7 @@ jform.on('submit', function () {
     var postdata = jform.serializeObject();
     postdata.password = postdata.password;
     $.xpost(jform.attr('action'), postdata, function (code, messages) {
+        console.log(code, messages)
         if (code == 0) {
             jsubmit.button(messages).delay(1000).location(referer);
         } else {

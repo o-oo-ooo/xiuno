@@ -1,4 +1,4 @@
-<?php if($gid > 0 && $gid < 5) { ?>
+<?php if(Auth::user() && Auth::user()->group_id > 0 && Auth::user()->group_id < 5) { ?>
 <div class="text-center">
 	<?php if(param(0) != 'thread') { ?>
 	<label class="mr-3">

@@ -24,7 +24,7 @@ class Forum extends Model
      */
     public function getIconAttribute($value)
     {
-        return $value ? asset('forum/' . $this->id . ',png') : asset('images/forum.png');
+        return $value ? asset('forum/' . $this->id . ',png') : asset('image/forum.png');
     }
     
     /**
@@ -47,5 +47,26 @@ class Forum extends Model
         return $value ? User::find(explode(',', $value)) : [];
     }
     
+    /**
+     * 获得可访问板块
+     *
+     * @return Collection
+     */
+    public static function allowForum($user, $index)
+    {
+        return static::all()->reject(function ($value) use ($user) {
+            return $value->accesson && !$value->accesslist[$user->group_id][$index];
+        });
+    }
+    
+    /**
+     * 获取板块主题
+     *
+     * @return string
+     */
+    public function thread()
+    {
+        return $this->hasMany(Thread::class, 'forum_id');
+    }
     
 }

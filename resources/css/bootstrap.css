@@ -11148,7 +11148,7 @@ a.text-dark:hover, a.text-dark:focus {
   width: var(--sbig);
   height: var(--sbig);
   background-size: var(--sbig);
-  background-image: url("../img/filetype.png");
+  background-image: url("../image/filetype.png");
 }
 
 .icon.filetype.big {

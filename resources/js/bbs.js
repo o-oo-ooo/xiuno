@@ -157,31 +157,7 @@ jmobile_collapsing_bavbar.on('touchmove', function(e) {
 
 
 
-// 删除帖子 / Delete post
-$('body').on('click', '.post_delete', function() {
-	var jthis = $(this);
-	var href = jthis.data('href');
-	var isfirst = jthis.attr('isfirst');
-	if(window.confirm(lang.confirm_delete)) {
-		$.xpost(href, function(code, message) {
-			var isfirst = jthis.attr('isfirst');
-			if(code == 0) {
-				if(isfirst == '1') {
-					$.location('<?php echo url("forum-$fid");?>');
-				} else {
-					// 删掉楼层
-					jthis.parents('.post').remove();
-					// 回复数 -1
-					var jposts = $('.posts');
-					jposts.html(xn.intval(jposts.html()) - 1);
-				}
-			} else {
-				$.alert(message);
-			}
-		});
-	}
-	return false;
-});
+
 
 // 引用 / Quote
 $('body').on('click', '.post_reply', function() {

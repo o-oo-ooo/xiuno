@@ -37,24 +37,10 @@ class ShareForumList
     public function handle(Request $request, Closure $next)
     {
         $this->view->share(
-            'forumlist', $this->getForumList($request->user())
+            'forumlist', Forum::allowForum($request->user(), 'allowread')
         );
         
         return $next($request);
-    }
-    
-    /**
-     * 获取栏目列表
-     *
-     * @return array
-     */
-    protected function getForumList($user)
-    {
-        $group_id = $user ? $user->group_id : 0;
-        
-        return Forum::all()->reject(function ($value) {
-            return $value->accesson && !$value->accesslist[$group_id]['allowread'];
-        });
     }
     
 }
